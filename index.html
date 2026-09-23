@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Pallino Neon Clicker</title>
+    <style>
+        body {
+            background-color: #0f0f1a;
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding-top: 50px;
+            overflow: hidden;
+            user-select: none;
+        }
+        h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+        #score {
+            font-size: 36px;
+            font-weight: bold;
+            color: #00ffff;
+            text-shadow: 0 0 15px #00ffff;
+        }
+        .container {
+            margin-top: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        #pallino {
+            width: 140px;
+            height: 140px;
+            background-color: #ff007f;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 25px #ff007f, inset 0 0 15px rgba(255,255,255,0.5);
+            transition: transform 0.1s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            font-size: 16px;
+            text-shadow: 0 0 5px rgba(0,0,0,0.5);
+        }
+        #pallino:active {
+            transform: scale(0.85);
+        }
+        #level {
+            margin-top: 25px;
+            font-size: 18px;
+            color: #ffaa00;
+            text-shadow: 0 0 8px rgba(255,170,0,0.4);
+        }
+    </style>
+</head>
+<body>
+    <h1>Pallino Neon Clicker</h1>
+    <p>Punteggio: <span id="score">0</span></p>
+    
+    <div class="container">
+        <div id="pallino" onclick="cliccaPallino()">CLICCAMI!</div>
+    </div>
+    
+    <div id="level">Livello: Neon Base</div>
+
+    <script>
+        let punti = 0;
+        const pallino = document.getElementById('pallino');
+        const scoreDisplay = document.getElementById('score');
+        const levelDisplay = document.getElementById('level');
+
+        // Colori neon di base
+        const neonColors = [
+            { bg: '#ff007f', shadow: '#ff007f', name: 'Neon Rosa 💖' },
+            { bg: '#00ffff', shadow: '#00ffff', name: 'Neon Cyan 💠' },
+            { bg: '#39ff14', shadow: '#39ff14', name: 'Neon Verde 🔋' },
+            { bg: '#ffff00', shadow: '#ffff00', name: 'Neon Giallo ⚡' },
+            { bg: '#9400d3', shadow: '#9400d3', name: 'Neon Viola 🔮' },
+            { bg: '#ff5e00', shadow: '#ff5e00', name: 'Neon Arancione 🔥' }
+        ];
+
+        function cliccaPallino() {
+            punti++;
+            scoreDisplay.innerText = punti;
+
+            // Logica dei colori in base al punteggio
+            if (punti < 20) {
+                let index = Math.floor(punti / 4) % neonColors.length;
+                applicaColore(neonColors[index].bg, neonColors[index].shadow, "Livello: " + neonColors[index].name);
+            } else if (punti < 50) {
+                let index = Math.floor(punti / 2) % neonColors.length;
+                applicaColore(neonColors[index].bg, neonColors[index].shadow, "Livello: Neon Rapido 🚀");
+            } else {
+                // Dopo i 50 punti parte il caos multicolore casuale!
+                const randomColor = '#' + Math.floor(Math.random()*16777215).toString(16).padStart(6, '0');
+                applicaColore(randomColor, randomColor, "Livello: CAOS NEON MULTICOLORE 🌈✨");
+            }
+        }
+
+        function applicaColore(bg, shadow, text) {
+            pallino.style.backgroundColor = bg;
+            pallino.style.boxShadow = `0 0 35px ${shadow}, inset 0 0 20px rgba(255,255,255,0.7)`;
+            levelDisplay.innerText = text;
+        }
+    </script>
+</body>
+</html>
+
+
